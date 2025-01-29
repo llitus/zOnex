@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahl Umrechnen</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            flex-grow: 1; /* Container wächst, um Platz zu füllen */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        input[type="number"] {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #1e88e5;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1565c0;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #1e88e5;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1565c0;
+        }
+
+        .back-button:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        /* Footer-Stil */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Button für Zurück zur Startseite -->
+    <button class="back-button" onclick="window.location.href='index.html'">Zurück zur Startseite</button>
+
+    <div class="container">
+        <h1>Gib eine Zahl ein</h1>
+        <input type="number" id="inputNumber" placeholder="Zahl eingeben" />
+        <button onclick="calculateResult()">Berechnen</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <div class="footer">
+        <p><b>by llitus</b></p>
+    </div>
+
+    <script>
+        function calculateResult() {
+            const inputNumber = document.getElementById('inputNumber').value;
+            if (inputNumber) {
+                const number = parseFloat(inputNumber);
+
+                // Berechnungen
+                const result64 = number / 64;
+                const result27 = result64 / 27;
+                const result54 = result27 / 54;
+
+                // Ergebnisse anzeigen
+                const resultText = `
+                    <p>Ergebnis für Zahl / 64: ${result64}</p>
+                    <p>Ergebnis für Zahl / 64 / 27: ${result27}</p>
+                    <p>Ergebnis für Zahl / 64 / 27 / 54: ${result54}</p>
+                `;
+                document.getElementById('result').innerHTML = resultText;
+            } else {
+                document.getElementById('result').innerHTML = '<p>Bitte eine Zahl eingeben!</p>';
+            }
+        }
+    </script>
+
+</body>
+</html>

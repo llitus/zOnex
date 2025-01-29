@@ -3,20 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button zu Seite 2</title>
+    <title>Zonex - SMP</title>
     <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
         button {
+            background-color: #1e88e5;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: blue;
-            color: white;
-            border: none;
             cursor: pointer;
-            border-radius: 5px;
+            transition: background-color 0.3s;
+            min-width: 120px; /* Mindestbreite für die Buttons */
+            padding-left: 20px; /* Etwas mehr Platz nach links für den Text */
+            padding-right: 20px; /* Etwas mehr Platz nach rechts für den Text */
+            white-space: nowrap; /* Verhindert das Umfließen von Text */
         }
+
         button:hover {
-            background-color: darkblue;
+            background-color: #1565c0;
         }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #super-section {
+            display: none;
+            text-align: center;
+        }
+
+        #filter-section {
+            margin-bottom: 20px;
+        }
+
+        /* Neuer Code für den Filter-Auswahlkasten */
+        #filter-section select {
+            background-color: #333;  /* Schwarzer Hintergrund */
+            color: white;            /* Weiße Schrift */
+            border: 1px solid #555;  /* Grauer Rand */
+            padding: 5px 10px;       /* Etwas Innenabstand */
+            border-radius: 1px;      /* Abgerundete Ecken */
+            font-size: 16px;         /* Schriftgröße */
+        }
+
+        /* Flexbox für die Buttons, damit sie umgebrochen werden */
+        .filter-btns-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .filter-btn {
+            width: calc(16.666% - 10px);  /* Die Breite so einstellen, dass 6 Buttons pro Zeile passen */
+            margin: 5px;
+            display: inline-block;
+        }
+
+        /* Wenn Buttons ausgeblendet sind, soll der Platz trotzdem behalten werden */
+        .filter-btn[style="display: none;"] {
+            display: none !important;
+        }
+
+        /* Stil für die Unterüberschrift */
+        .sub-heading {
+            font-size: 18px;
+            margin-top: 20px;
+            color: white; /* Weiß für den "Danke" Text */
+        }
+
     </style>
 </head>
 <body>

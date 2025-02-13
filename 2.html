@@ -118,9 +118,9 @@
                 const number = parseFloat(inputNumber);
 
                 // Berechnungen
-                const result64 = number / 64;
-                const result27 = result64 / 27;
-                const result54 = result27 / 54;
+                const result64 = (number / 64).toFixed(1);
+                const result27 = (result64 / 27).toFixed(1);
+                const result54 = (result27 / 54).toFixed(1);
 
                 // Ergebnisse anzeigen
                 const resultText = `

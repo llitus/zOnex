@@ -16,6 +16,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .container {
@@ -45,6 +46,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -56,6 +58,24 @@
             font-size: 18px;
         }
 
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #1e88e5;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1565c0;
+        }
+
         .footer {
             position: fixed;
             left: 0;
@@ -65,33 +85,27 @@
             color: white;
             text-align: center;
             padding: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Zurück-Button -->
+    <button class="back-button" onclick="window.location.href='index.html'">Zurück</button>
+
     <div class="container">
         <h1>Umrechnung</h1>
         
-        <input type="number" id="inputNumber" placeholder="Zahl eingeben" />
+        <input type="number" id="inputNumber" placeholder="Zahl eingeben" min="0" oninput="calculateResult()" />
         
-        <label for="fromUnit">Von:</label>
-        <select id="fromUnit">
+        <label for="fromUnit">Eingabe in:</label>
+        <select id="fromUnit" onchange="calculateResult()">
             <option value="items">Items</option>
             <option value="stacks">Stacks</option>
             <option value="shulker">Shulker</option>
             <option value="doublechests">Doublechests</option>
         </select>
-
-        <label for="toUnit">Nach:</label>
-        <select id="toUnit">
-            <option value="items">Items</option>
-            <option value="stacks">Stacks</option>
-            <option value="shulker">Shulker</option>
-            <option value="doublechests">Doublechests</option>
-        </select>
-
-        <button onclick="calculateResult()">Berechnen</button>
 
         <div class="result" id="result"></div>
     </div>
@@ -104,8 +118,7 @@
         function calculateResult() {
             const inputNumber = parseFloat(document.getElementById('inputNumber').value);
             const fromUnit = document.getElementById('fromUnit').value;
-            const toUnit = document.getElementById('toUnit').value;
-            
+
             if (isNaN(inputNumber) || inputNumber <= 0) {
                 document.getElementById('result').innerHTML = '<p>Bitte eine gültige Zahl eingeben!</p>';
                 return;
@@ -116,26 +129,29 @@
             const shulkerSize = 27;
             const doubleChestSize = 54;
 
-            let result = inputNumber; // Standard: keine Änderung
+            let items = inputNumber; // Standard: Items bleiben gleich
 
-            // Umrechnung nach Items
-            if (fromUnit === "stacks") result *= stackSize;
-            if (fromUnit === "shulker") result *= stackSize * shulkerSize;
-            if (fromUnit === "doublechests") result *= stackSize * shulkerSize * doubleChestSize;
+            // Umrechnung aller Einheiten in Items
+            if (fromUnit === "stacks") items = inputNumber * stackSize;
+            if (fromUnit === "shulker") items = inputNumber * stackSize * shulkerSize;
+            if (fromUnit === "doublechests") items = inputNumber * stackSize * shulkerSize * doubleChestSize;
 
-            // Umrechnung von Items in die gewünschte Einheit
-            if (toUnit === "stacks") result /= stackSize;
-            if (toUnit === "shulker") result /= stackSize * shulkerSize;
-            if (toUnit === "doublechests") result /= stackSize * shulkerSize * doubleChestSize;
+            // Berechnungen für alle Umrechnungsarten
+            const stacks = roundUp(items / stackSize);
+            const shulker = roundUp(items / (stackSize * shulkerSize));
+            const doublechests = roundUp(items / (stackSize * shulkerSize * doubleChestSize));
 
-            result = roundUp(result);
-
-            document.getElementById('result').innerHTML = `<p>${inputNumber} ${fromUnit} = ${result} ${toUnit}</p>`;
+            document.getElementById('result').innerHTML = `
+                <p>Items: ${roundUp(items)}</p>
+                <p>Stacks: ${stacks}</p>
+                <p>Shulker: ${shulker}</p>
+                <p>Doublechests: ${doublechests}</p>
+            `;
         }
     </script>
 
     <div class="footer">
-        <p>v.3.0 by <b>llitus</b></p>
+        <p>v3.1 | by <b>llitus</b></p>
     </div>
 
 </body>

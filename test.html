@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* Stellt sicher, dass die Elemente untereinander angezeigt werden */
+        }
 
+        .container {
+            text-align: center;
+            margin-bottom: 20px; /* Abstand zwischen den Containern */
+        }
+
+        button {
+            background-color: #1e88e5;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            min-width: 120px; /* Mindestbreite für die Buttons */
+            padding-left: 20px; /* Etwas mehr Platz nach links für den Text */
+            padding-right: 20px; /* Etwas mehr Platz nach rechts für den Text */
+            white-space: nowrap; /* Verhindert das Umfließen von Text */
+        }
+
+        button:hover {
+            background-color: #1565c0;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-section">
+        <h1>Willkommen!</h1>
+        <p>Hier findest du Informationen und mehr rund um Minecraft und dem <b>zOnex - SMP</b></p>
+    </div>
+          
+    <div class="container">
+        <button onclick="window.location.href='3.html'">Mitglieder</button>
+    </div>    
+
+    <div class="container">
+        <button onclick="window.location.href='mods.html'">Mods</button>
+    </div>    
+    
+<div class="footer">
+        <p>v.2.5             by<b> llitus</b></p>
+    </div>
+
+</body>
+</html>

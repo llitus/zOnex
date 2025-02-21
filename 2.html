@@ -117,6 +117,8 @@
             if (inputNumber) {
                 const number = parseFloat(inputNumber);
 
+                const roundUp = (num) => Math.ceil(num * 10) / 10;
+                
                 // Berechnungen
                 const result64 = (number / 64).toFixed(1);
                 const result27 = (result64 / 27).toFixed(1);

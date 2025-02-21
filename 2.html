@@ -16,25 +16,24 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
 
         .container {
             text-align: center;
-            flex-grow: 1; /* Container wächst, um Platz zu füllen */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        input[type="number"] {
+        input, select {
             background-color: #333;
             color: #fff;
             border: 1px solid #555;
             padding: 10px;
             font-size: 16px;
             border-radius: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         button {
@@ -52,39 +51,12 @@
             background-color: #1565c0;
         }
 
-        button:active {
-            transform: scale(0.98);
-        }
-
-        .back-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #1e88e5;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .back-button:hover {
-            background-color: #1565c0;
-        }
-
-        .back-button:active {
-            transform: scale(0.98);
-        }
-
         .result {
             margin-top: 20px;
             font-size: 18px;
         }
 
-        /* Footer-Stil */
-         .footer {
+        .footer {
             position: fixed;
             left: 0;
             bottom: 0;
@@ -94,53 +66,77 @@
             text-align: center;
             padding: 10px;
         }
-
     </style>
 </head>
 <body>
 
-    <!-- Button für Zurück zur Startseite -->
-    <button class="back-button" onclick="window.location.href='index.html'">Zurück zur Startseite</button>
-
     <div class="container">
-        <h1>Gib eine Zahl ein</h1>
+        <h1>Umrechnung</h1>
+        
         <input type="number" id="inputNumber" placeholder="Zahl eingeben" />
+        
+        <label for="fromUnit">Von:</label>
+        <select id="fromUnit">
+            <option value="items">Items</option>
+            <option value="stacks">Stacks</option>
+            <option value="shulker">Shulker</option>
+            <option value="doublechests">Doublechests</option>
+        </select>
+
+        <label for="toUnit">Nach:</label>
+        <select id="toUnit">
+            <option value="items">Items</option>
+            <option value="stacks">Stacks</option>
+            <option value="shulker">Shulker</option>
+            <option value="doublechests">Doublechests</option>
+        </select>
+
         <button onclick="calculateResult()">Berechnen</button>
 
         <div class="result" id="result"></div>
     </div>
 
-
     <script>
+        function roundUp(num) {
+            return Math.ceil(num * 10) / 10; // Immer auf eine Nachkommastelle aufrunden
+        }
+
         function calculateResult() {
-            const inputNumber = document.getElementById('inputNumber').value;
-            if (inputNumber) {
-                const number = parseFloat(inputNumber);
-
-                const roundUp = (num) => Math.ceil(num * 10) / 10;
-                
-                // Berechnungen
-                const result64 = (number / 64).toFixed(1);
-                const result27 = (result64 / 27).toFixed(1);
-                const result54 = (result27 / 54).toFixed(1);
-
-                // Ergebnisse anzeigen
-                const resultText = `
-                    <p>Stacks: ${result64}</p>
-                    <p>Shulker: ${result27}</p>
-                    <p>Doublechests voll mit Shulker: ${result54}</p>
-                `;
-                document.getElementById('result').innerHTML = resultText;
-            } else {
-                document.getElementById('result').innerHTML = '<p>Bitte eine Zahl eingeben!</p>';
+            const inputNumber = parseFloat(document.getElementById('inputNumber').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            
+            if (isNaN(inputNumber) || inputNumber <= 0) {
+                document.getElementById('result').innerHTML = '<p>Bitte eine gültige Zahl eingeben!</p>';
+                return;
             }
+
+            // Konversionsfaktoren
+            const stackSize = 64;
+            const shulkerSize = 27;
+            const doubleChestSize = 54;
+
+            let result = inputNumber; // Standard: keine Änderung
+
+            // Umrechnung nach Items
+            if (fromUnit === "stacks") result *= stackSize;
+            if (fromUnit === "shulker") result *= stackSize * shulkerSize;
+            if (fromUnit === "doublechests") result *= stackSize * shulkerSize * doubleChestSize;
+
+            // Umrechnung von Items in die gewünschte Einheit
+            if (toUnit === "stacks") result /= stackSize;
+            if (toUnit === "shulker") result /= stackSize * shulkerSize;
+            if (toUnit === "doublechests") result /= stackSize * shulkerSize * doubleChestSize;
+
+            result = roundUp(result);
+
+            document.getElementById('result').innerHTML = `<p>${inputNumber} ${fromUnit} = ${result} ${toUnit}</p>`;
         }
     </script>
 
-<div class="footer">
-        <p>v.2.5             by<b> llitus</b></p>
+    <div class="footer">
+        <p>v.3.0 by <b>llitus</b></p>
     </div>
-
 
 </body>
 </html>
